@@ -77,18 +77,18 @@ siray-zapier/
 
 ## TODO
 #### action
-- [] chatCompletion
-- [] imageGenerate
-- [] videoGenerate
-- [] getTaskStatus
+- [x] chatCompletion
+- [x] imageGenerate
+- [x] videoGenerate
+- [x] getTaskStatus
 #### search
-- [] modelList
+- [x] modelList
 #### trigger
-- [] videoGenerationCompleted
-- [] imageGenerationCompleted
+- [x] videoGenerationCompleted
+- [x] imageGenerationCompleted
 #### test
-- [] action test
-- [] create test
-- [] search test
+- [ ] action test
+- [ ] create test
+- [ ] search test
 
 
