@@ -1,0 +1,16 @@
+{
+  "name": "siray-zapier",
+  "version": "1.0.0",
+  "description": "Siray AI Zapier integration",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --testTimeout 10000"
+  },
+  "dependencies": {
+    "zapier-platform-core": "18.2.2"
+  },
+  "devDependencies": {
+    "jest": "^29.6.0"
+  },
+  "private": true
+}
