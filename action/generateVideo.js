@@ -3,11 +3,7 @@ async function perform(z, bundle) {
 
   let url = "https://api.siray.ai/v1/video/generations";
 
-  const body = {
-    duration,
-    model,
-    prompt,
-  };
+  const body = { duration, model, prompt };
 
   if (image) {
     body.image = image;
@@ -16,7 +12,6 @@ async function perform(z, bundle) {
   const response = await z.request({
     method: "POST",
     url: url,
-
     body: JSON.stringify(body),
   });
   return response;

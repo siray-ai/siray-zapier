@@ -70,7 +70,7 @@ async function getAdvanceOperation(_z, bundle) {
 }
 
 async function perform(z, bundle) {
-  const { message, temprature, model, filter, max_tokens } = bundle.inputData;
+  const { message, temperature, model, filter, max_tokens } = bundle.inputData;
   const response = z.request({
     url: "https://api.siray.ai/v1/chat/completions",
     method: "POST",
@@ -86,6 +86,7 @@ async function perform(z, bundle) {
       max_tokens,
     }),
   });
+  return response
 }
 
 module.exports = {

@@ -1,19 +1,21 @@
-import zapier, { defineApp } from "zapier-platform-core";
+const authentication = require("./authentication");
+const { befores, afters } = require("./middleware");
 
-import packageJson from "../package.json" with { type: "json" };
+const chatCompletion = require("./action/chatCompletion");
+const generateImage = require("./action/generateImage");
+const generateVideo = require("./action/generateVideo");
+const getTaskStatus = require("./action/getTaskStatus");
 
-import authentication from "./authentication.ss";
-import { befores, afters } from "./middleware.js";
-import chatCompletion from './action/chatCompletion.js'
-import generateImage from './action/generateImage.js'
-import generateVideo from './action/generateVideo.js'
+const modelList = require("./search/modelList");
 
+const videoGenerationCompleted = require("./trigger/videoGenerationCompleted");
+const imageGenerationCompleted = require("./trigger/imageGenerationCompleted");
 
-export default defineApp({
-  version: packageJson.version,
-  platformVersion: zapier.version,
+module.exports = {
+  version: require("./package.json").version,
+  platformVersion: require("zapier-platform-core").version,
 
-  authentication: authentication,
+  authentication,
 
   beforeRequest: [...befores],
   afterResponse: [...afters],
@@ -33,4 +35,4 @@ export default defineApp({
   searches: {
     [modelList.key]: modelList,
   },
-});
+};
