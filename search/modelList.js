@@ -1,23 +1,6 @@
-function getModelsUrlByTag(tag) {
-  const imageTags = ["text-to-image", "image-to-image"];
-  const videoTags = ["text-to-video", "video-to-video", "image-to-video"];
-
-  if (tag === "chat") {
-    return "https://api.siray.ai/v1/chat/completions";
-  }
-  if (imageTags.has(tag)) {
-    return "https://api.siray.ai/v1/images/generations/async";
-  }
-  if (videoTags.has(tag)) {
-    return "https://api.siray.ai/v1/video/generations";
-  }
-
-  return "https://api.siray.ai/v1/models";
-}
-
 async function perform(z, bundle) {
   const selectedTag = bundle.inputData.generation_type;
-  const response = await z.request({ url: getModelsUrlByTag(selectedTag) });
+  const response = await z.request({ url: "https://api.siray.ai/v1/models"});
   const models = response.data || [];
 
   const allowedTags = new Set([
@@ -41,11 +24,9 @@ async function perform(z, bundle) {
     })
     .map((model) => ({
       id: model.id,
-      name: model.name || model.model_name || String(model.id),
+      name:  model.model_name 
     }));
 }
-
-
 
 module.exports = {
   key: "list_models",
@@ -57,16 +38,7 @@ module.exports = {
     hidden: true,
   },
   operation: {
-    inputFields: [
-      {
-        key: "generation_type",
-        required: false,
-      },
-      {
-        key: "tag",
-        required: false,
-      },
-    ],
+
     perform,
     // The folowing is a "hint" to the Zap Editor that this trigger returns data
     // "in pages", and that the UI should display an option to "load more" to

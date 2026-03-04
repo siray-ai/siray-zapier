@@ -1,4 +1,19 @@
-async function perform(z, bundle) {}
+async function perform(z, bundle) {
+  const { model, prompt, image } = bundle.inputData;
+  const body = { model, prompt };
+
+  if (image) {
+    body.image = image;
+  }
+
+  const response = await z.request({
+    url: "https://api.siray.ai/v1/images/generations/async",
+    method: "POST",
+    body: JSON.stringify(body),
+  });
+
+  return response;
+}
 
 module.exports = {
   key: "imageGeneration",
@@ -21,36 +36,28 @@ module.exports = {
         required: true,
         altersDynamicFields: true,
       },
-      {
-        label: "Prompt",
-        key: "prompt",
-        type: "string",
-        noDataExpression: true,
-        required: true,
-        default: "",
-        helpText: "Text prompt for generation",
-        displayOptions: {
-          show: {
-            generation_type: ["text-to-image"],
-          },
-        },
+      (z, bundle) => {
+        if (bundle.inputData.generation_type === "text-to-imag") {
+          return {
+            label: "Prompt",
+            key: "prompt",
+            type: "string",
+            noDataExpression: true,
+            required: true,
+            default: "",
+            helpText: "Text prompt for generation",
+          };
+        } else {
+          return {
+            label: "Image",
+            key: "image",
+            type: "file",
+            required: true,
+            helpText:
+              "Input image for generation, it can be data URL or image URL",
+          };
+        }
       },
-
-      
-      {
-        label: "Image",
-        key: "image",
-        type: "file",
-        required: true,
-        displayOptions: {
-          show: {
-            generation_type: ["image-to-image"],
-          },
-        },
-        helpText: "Input image for generation, it can be data URL or image URL",
-      },
-
-    
       {
         label: "Model",
         key: "model",
@@ -60,8 +67,6 @@ module.exports = {
         altersDynamicFields: false,
         helpText: "Which LLM provider to use",
       },
-
     ],
   },
-
 };

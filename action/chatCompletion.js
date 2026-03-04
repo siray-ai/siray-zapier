@@ -1,7 +1,7 @@
 async function getAdvanceOperation(_z, bundle) {
   if (bundle.inputData.show_advance === true)
     return [
-       {
+      {
         label: "frequency_penalty",
         key: "frequency_penalty",
         type: "number",
@@ -70,11 +70,21 @@ async function getAdvanceOperation(_z, bundle) {
 }
 
 async function perform(z, bundle) {
-  const { message,temprature } = bundle.inputData;
+  const { message, temprature, model, filter, max_tokens } = bundle.inputData;
   const response = z.request({
     url: "https://api.siray.ai/v1/chat/completions",
     method: "POST",
-    body: {},
+    body: JSON.stringify({
+      model,
+      messages: [
+        {
+          role: filter,
+          content: message,
+        },
+      ],
+      temperature,
+      max_tokens,
+    }),
   });
 }
 
@@ -99,30 +109,14 @@ module.exports = {
       {
         label: "Filters",
         key: "filter",
-        type: "collection",
-        placeholder: "Add Field",
+        type: "string",
         required: true,
         default: "system",
-        options: [
+        choices: [
           {
-            label: "Type",
-            key: "type",
-            type: "options",
-            options: [
-              {
-                key: "assistance",
-                value: "assistance",
-              },
-              {
-                key: "user",
-                value: "user",
-              },
-              {
-                key: "system",
-                value: "system",
-              },
-            ],
-            default: "system",
+            assistance: "assistance",
+            user: "user",
+            system: "system",
           },
         ],
       },
