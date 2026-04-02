@@ -37,7 +37,7 @@ module.exports = {
         altersDynamicFields: true,
       },
       (z, bundle) => {
-        if (bundle.inputData.generation_type === "text-to-imag") {
+        if (bundle.inputData.generation_type === "text-to-image") {
           return {
             label: "Prompt",
             key: "prompt",

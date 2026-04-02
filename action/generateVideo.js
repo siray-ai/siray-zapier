@@ -1,7 +1,7 @@
 async function perform(z, bundle) {
   const { model, duration, prompt, image } = bundle.inputData;
 
-  let url = "https://api.siray.ai/v1/video/generations";
+  const url = "https://api.siray.ai/v1/video/generations";
 
   const body = { duration, model, prompt };
 
@@ -18,24 +18,29 @@ async function perform(z, bundle) {
 }
 
 module.exports = {
-  key: "Video Generation",
-  value: "videoGeneration",
-  helpText: "Generate a video from text or image input",
+  key: "videoGeneration",
+  noun: "Video Generation",
+  display: {
+    label: "Video Generation",
+    description: "Generate a video from text or image input",
+  },
   operation: {
     perform,
-    inputField: [
+    inputFields: [
       {
         label: "Generation Type",
-        key: "generationType",
-        type: "options",
+        key: "generation_type",
+        type: "string",
         choices: {
           "text-to-video": "Text to Video",
           "image-to-video": "Image to Video",
         },
         default: "text-to-video",
+        required: true,
+        altersDynamicFields: true,
       },
       (z, bundle) => {
-        if (bundle.inputData.generation_type === "text-to-imag") {
+        if (bundle.inputData.generation_type === "text-to-video") {
           return {
             label: "Prompt",
             key: "prompt",
@@ -61,6 +66,7 @@ module.exports = {
         key: "duration",
         type: "number",
         default: 8,
+        required: true,
         helpText: "Video duration in seconds. Fixed value: 8",
       },
       {

@@ -12,18 +12,19 @@ async function perform(z, bundle) {
     url: `${baseUrl}/${task_id}`,
     method: "GET",
   });
+  const result = response.data || {};
 
   return {
-    task_id: response.task_id,
-    action: response.action,
-    status: response.status,
-    fail_reason: response.fail_reason,
-    outputs: response.outputs,
-    submit_time: response.submit_time,
-    start_time: response.start_time,
-    finish_time: response.finish_time,
-    progress: response.progress,
-    data: response.data
+    task_id: result.task_id,
+    action: result.action,
+    status: result.status,
+    fail_reason: result.fail_reason,
+    outputs: result.outputs,
+    submit_time: result.submit_time,
+    start_time: result.start_time,
+    finish_time: result.finish_time,
+    progress: result.progress,
+    data: result.data,
   };
 }
 
@@ -67,7 +68,7 @@ module.exports = {
     { key: "submit_time", label: "Submit Time" },
     { key: "start_time", label: "Start Time" },
     { key: "finish_time", label: "Finish Time" },
-    { key: "progress", label: "Progresse" },
+    { key: "progress", label: "Progress" },
     { key: "data", label: "Data" },
   ],
 };
