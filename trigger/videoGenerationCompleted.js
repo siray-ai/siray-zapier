@@ -24,19 +24,20 @@ const perform = async (z, bundle) => {
     url: `https://api.siray.ai/v1/video/generations/${task_id}`,
     method: "GET",
   });
+  const data = response.data || {};
 
   const result = {
-    id: response.task_id,
-    task_id: response.task_id,
-    action: response.action,
-    status: response.status,
-    progress: response.progress,
-    fail_reason: response.fail_reason,
-    outputs: response.outputs,
-    submit_time: response.submit_time,
-    start_time: response.start_time,
-    finish_time: response.finish_time,
-    data: response.data,
+    id: data.task_id,
+    task_id: data.task_id,
+    action: data.action,
+    status: data.status,
+    progress: data.progress,
+    fail_reason: data.fail_reason,
+    outputs: data.outputs,
+    submit_time: data.submit_time,
+    start_time: data.start_time,
+    finish_time: data.finish_time,
+    data: data.data,
   };
 
   return isDone(result.status, result.progress) ? [result] : [];

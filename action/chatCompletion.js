@@ -71,7 +71,7 @@ async function getAdvanceOperation(_z, bundle) {
 
 async function perform(z, bundle) {
   const { message, temperature, model, filter, max_tokens } = bundle.inputData;
-  const response = z.request({
+  const response = await z.request({
     url: "https://api.siray.ai/v1/chat/completions",
     method: "POST",
     body: JSON.stringify({
@@ -86,7 +86,7 @@ async function perform(z, bundle) {
       max_tokens,
     }),
   });
-  return response
+  return response.data;
 }
 
 module.exports = {
@@ -113,13 +113,11 @@ module.exports = {
         type: "string",
         required: true,
         default: "system",
-        choices: [
-          {
-            assistance: "assistance",
-            user: "user",
-            system: "system",
-          },
-        ],
+        choices: {
+          assistant: "Assistant",
+          user: "User",
+          system: "System",
+        },
       },
       {
         key: "generation_type",
@@ -143,9 +141,9 @@ module.exports = {
       },
       {
         key: "show_advance",
-        label: "Shoe Advance Option",
+        label: "Show Advanced Options",
         type: "boolean",
-        default: "false",
+        default: false,
         altersDynamicFields: true,
       },
       getAdvanceOperation,
